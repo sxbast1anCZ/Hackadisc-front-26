@@ -1,9 +1,10 @@
 import { DashboardShell } from "@/components/layout/DashboardShell";
+import { OverviewCard } from "@/features/dashboard/components/OverviewCard";
 
 export default function Home() {
   return (
     <DashboardShell>
-      <p className="text-sm text-slate-400">Dashboard content goes here.</p>
+      <OverviewCard />
     </DashboardShell>
   );
 }
