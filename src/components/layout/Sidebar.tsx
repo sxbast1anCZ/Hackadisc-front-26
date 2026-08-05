@@ -1,14 +1,18 @@
+import Image from "next/image";
 import Link from "next/link";
-import { Compass } from "lucide-react";
 import { navItems } from "@/lib/nav-items";
 import { cn } from "@/lib/utils";
 
 export function Sidebar() {
   return (
     <aside className="flex w-20 flex-col items-center gap-8 border-r border-black/5 bg-white py-6">
-      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900 text-white">
-        <Compass className="h-5 w-5" />
-      </div>
+      <Image
+        src="/logo-insecap-sin-texto.png"
+        alt="Insecap"
+        width={36}
+        height={40}
+        priority
+      />
       <nav className="flex flex-1 flex-col gap-2">
         {navItems.map((item) => {
           const Icon = item.icon;
