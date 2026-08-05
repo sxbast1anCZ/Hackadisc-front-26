@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dashboard",
-  description: "Hackadisc dashboard",
+  title: "Dashboard Área Comercial",
+  description: "Dashboard Área Comercial de Insecap (datos de ejemplo)",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

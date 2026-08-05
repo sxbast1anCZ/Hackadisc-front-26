@@ -1,5 +1,6 @@
 import { DashboardShell } from "@/components/layout/DashboardShell";
 import { KpiCard } from "@/features/dashboard/components/KpiCard";
+import { PerformanceIndicatorsTable } from "@/features/dashboard/components/PerformanceIndicatorsTable";
 import { SalesChart } from "@/features/dashboard/components/SalesChart";
 import { SalesDetailTable } from "@/features/dashboard/components/SalesDetailTable";
 import { kpis } from "@/features/dashboard/data/mock";
@@ -15,6 +16,7 @@ export default function Home() {
         </div>
         <SalesChart />
         <SalesDetailTable />
+        <PerformanceIndicatorsTable />
       </div>
     </DashboardShell>
   );
