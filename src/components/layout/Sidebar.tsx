@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Compass, MessageCircle } from "lucide-react";
+import { Compass } from "lucide-react";
 import { navItems } from "@/lib/nav-items";
 import { cn } from "@/lib/utils";
 
@@ -43,13 +43,6 @@ export function Sidebar() {
           );
         })}
       </nav>
-      <button
-        type="button"
-        aria-label="Chat"
-        className="flex h-10 w-10 items-center justify-center rounded-full text-slate-400 hover:bg-slate-50"
-      >
-        <MessageCircle className="h-5 w-5" />
-      </button>
     </aside>
   );
 }
