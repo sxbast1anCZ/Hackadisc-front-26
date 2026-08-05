@@ -1,30 +1,41 @@
-export interface OverviewStat {
-  label: string;
-  value: number;
-  deltaPercent: number;
-  direction: "up" | "down";
-}
+export type DeltaDirection = "up" | "down" | "neutral";
 
-export interface CustomerAvatar {
-  name: string;
+export interface KpiStat {
+  primaryLabel: string;
+  primaryValue: number;
+  deltaPercent: number;
+  direction: DeltaDirection;
+  secondaryLabel: string;
+  secondaryValue: number;
 }
 
 export interface ChartPoint {
-  label: string;
+  month: string;
   value: number;
 }
 
-export interface Product {
-  id: string;
-  name: string;
-  price: number;
-  status: "Active" | "Offline";
+export type SalesDetailRowKey =
+  | "enProceso"
+  | "enProcesoHistorico"
+  | "canceladas"
+  | "terminadas"
+  | "terminadasSence"
+  | "total";
+
+export interface SalesDetailRow {
+  key: SalesDetailRowKey;
+  label: string;
+  amountsByVendor: Record<string, number>;
 }
 
-export interface Comment {
+export interface IndicatorCell {
+  current: number;
+  target: number | null;
+}
+
+export interface PerformanceIndicatorRow {
   id: string;
-  author: string;
-  product: string;
-  timestamp: string;
-  text: string;
+  label: string;
+  hasDetailButton: boolean;
+  cellsByVendor: Record<string, IndicatorCell | null>;
 }
