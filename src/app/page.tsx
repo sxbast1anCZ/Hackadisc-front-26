@@ -1,4 +1,5 @@
 import { DashboardShell } from "@/components/layout/DashboardShell";
+import { CommentsCard } from "@/features/dashboard/components/CommentsCard";
 import { OverviewCard } from "@/features/dashboard/components/OverviewCard";
 import { PopularProductsCard } from "@/features/dashboard/components/PopularProductsCard";
 import { ProductViewChart } from "@/features/dashboard/components/ProductViewChart";
@@ -13,6 +14,7 @@ export default function Home() {
         </div>
         <div className="flex flex-col gap-6">
           <PopularProductsCard />
+          <CommentsCard />
         </div>
       </div>
     </DashboardShell>
