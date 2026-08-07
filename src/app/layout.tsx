@@ -17,7 +17,12 @@ export const metadata: Metadata = {
   description: "Dashboard Área Comercial de Insecap (datos de ejemplo)",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+// Todo el dashboard lee datos en vivo de la API: no hay nada que prerenderizar,
+// y una página estática mostraría el snapshot de la hora del build en vez del de
+// la corrida actual. Declarado en el layout para que aplique a todas las rutas.
+export const dynamic = "force-dynamic";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"

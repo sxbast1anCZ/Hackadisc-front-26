@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Hackadisc-front-26
 
-## Getting Started
+Dashboard de HackaDisc 2026 (Insecap). Next 16 + Tailwind + recharts, contra la
+API de `Hackadisc-back-26`.
 
-First, run the development server:
+**No hay datos de ejemplo.** Todo lo que se ve viene de la API; si un número no
+está en la respuesta, no se muestra. El front no calcula ningún KPI.
+
+## Arrancar
+
+Primero el backend (ver `Hackadisc-back-26/README.md`), después:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev          # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+La URL de la API sale de `NEXT_PUBLIC_API_URL` (default `http://localhost:8000`).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+> **Windows:** `next build` falla con `InvariantError: Expected workStore to be
+> initialized` si se corre desde una ruta con el casing distinto al real
+> (`C:\Users\...\documents\github\...` en vez de `Documents\GitHub`). Next resuelve
+> los módulos con dos casings y termina cargando dos instancias del mismo módulo.
+> `cd` a la ruta con las mayúsculas correctas antes de compilar. `npm run dev` no
+> se ve afectado.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Rutas
 
-## Learn More
+| Ruta | Qué muestra |
+|---|---|
+| `/` | Vista gerencial: proyección, pipeline, valor perdido, mora, tracker mes a mes, scorecard, conversión por ejecutivo, cobranza, riesgo de clientes |
+| `/ejecutivo/[vendedor]` | Vista personal: su proyección, avance vs. su meta ponderada, conversión con IC contra el equipo, cobranza, pendientes de facturar |
+| `/clientes/[id]` | Drill-down: los 4 ejes de riesgo, diagnóstico, historia de compra, operaciones en mora |
 
-To learn more about Next.js, take a look at the following resources:
+## Decisiones de visualización que no son estéticas
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Cada una viene de una decisión ya tomada con evidencia en los documentos de
+modelado (`08_Vistas_Gerencial_y_Ejecutivo.md` §6). Cambiarlas sin leer eso
+deshace con CSS lo que el modelo corrigió con datos:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **La proyección individual se ve distinta según el ejecutivo.** Los que tienen
+  R² negativo muestran un rango gris punteado sin punto central y con nota
+  explícita. Si todos se vieran igual, el diseño transmitiría una confianza que
+  los datos no respaldan. El backend además no emite el punto para ellos.
+- **`P(meta)` es un badge neutro, no un semáforo.** El equipo supera la meta hace
+  8 meses seguidos: un verde permanente se deja de mirar.
+- **Los 4 ejes de riesgo de cliente van en columnas separadas.** Nunca un gauge
+  único: la correlación cancelación–mora es ≈ −0,05, son fenómenos distintos.
+- **Los estados `"sin ..."` van en gris**, jamás con el color de "bajo riesgo".
+  Están en la misma columna pero significan "no sabemos".
+- **El scorecard son barras por eje**, no un número compuesto.
+- **La conversión lleva su intervalo de confianza dibujado.** Barras que no se
+  solapan son diferencia real; el porcentaje solo no lo dice.
+- **Los días a facturación son siempre un rango P25–P75**, nunca un día exacto.
+- **El roster de ejecutivos se lee de `GET /vendedores`**, nunca se hardcodea: una
+  lista copiada a mano ya dejó a una ejecutiva desvinculada en pantalla una vez.
+- **El pipeline vencido ($689,8M) va aparte y etiquetado como higiene de datos**,
+  nunca sumado al pipeline real.
